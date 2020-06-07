@@ -124,7 +124,7 @@ build() {
   )
 
   local _meson_options=(
-    -Dversion-tag="${pkgver}-${pkgrel}-arch"
+    -Dversion-tag="${pkgver}-${pkgrel}-tos"
 
     -Dgnu-efi=true
     -Dima=false
@@ -136,7 +136,7 @@ build() {
     -Ddefault-hierarchy=hybrid
     -Ddefault-kill-user-processes=false
     -Ddefault-locale=C
-    -Dfallback-hostname='archlinux'
+    -Dfallback-hostname='toslinux'
     -Dnologin-path=/usr/bin/nologin
     -Dntp-servers="${_timeservers[*]}"
     -Ddns-servers="${_nameservers[*]}"
