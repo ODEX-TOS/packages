@@ -25,7 +25,7 @@ source=("git+https://github.com/systemd/systemd-stable#tag=${_tag}?signed"
         'initcpio-hook-udev'
         'initcpio-install-systemd'
         'initcpio-install-udev'
-        'arch.conf'
+        'tos.conf'
         'loader.conf'
         'splash-arch.bmp'
         'systemd-user.pam'
