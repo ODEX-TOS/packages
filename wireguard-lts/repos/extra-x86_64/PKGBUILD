@@ -1,7 +1,7 @@
 # Maintainer: Christian Hesse <mail@eworm.de>
 
 pkgname=wireguard-lts
-pkgver=1.0.20200623
+pkgver=1.0.20200712
 pkgrel=3
 pkgdesc='Wireguard module for LTS Kernel'
 url='https://www.wireguard.com/'
@@ -14,7 +14,7 @@ provides=('WIREGUARD-MODULE')
 build() {
     _kernver="$(</usr/src/linux-lts/version)"
 
-    dkms build --dkmstree "$srcdir" -m wireguard/$pkgver -k $_kernver
+    fakeroot dkms build --dkmstree "$srcdir" -m wireguard/$pkgver -k $_kernver
 }
 
 package() {
@@ -30,4 +30,3 @@ package() {
 }
 
 # vim:set sw=2 et:
-

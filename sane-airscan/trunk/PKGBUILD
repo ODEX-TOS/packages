@@ -1,0 +1,29 @@
+# Maintainer: Andreas Radke <andyrtr@archlinux.org>
+# Contributor: Thomas Kiss <thokis@gmail.com>
+
+pkgname=sane-airscan
+pkgver=0.99.10
+pkgrel=1
+pkgdesc="SANE - SANE backend for AirScan (eSCL) and WSD document scanners"
+url="https://github.com/alexpevzner/sane-airscan"
+arch=('x86_64')
+license=('GPL2')
+depends=('sane' 'libsoup')
+#makedepends=('meson')
+optdepends=('ipp-usb: allows to send HTTP requests via a USB connection on devices without Ethernet or WiFi connections')
+source=("$pkgname-$pkgver.tar.gz"::"https://github.com/alexpevzner/${pkgname}/archive/${pkgver}.tar.gz")
+sha256sums=('e32034edaf3f3d8f6a1ba99e66de9f25d60fc036931cf6ca9cc5744575d11135')
+
+build() {
+    cd ${pkgname}-${pkgver}
+    make
+}
+
+package() {
+    cd ${pkgname}-${pkgver}
+    make DESTDIR="${pkgdir}" install
+    install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README"
+    # add missing .so symlink
+    cd "${pkgdir}"/usr/lib/sane
+    ln -vsf libsane-airscan.so.1 libsane-airscan.so
+}

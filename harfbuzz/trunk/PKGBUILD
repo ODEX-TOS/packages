@@ -1,10 +1,10 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
-# Maintainer: Jan de Groot <jgc@archlinux.org>
+# Contributor: Jan de Groot <jgc@archlinux.org>
 
 pkgbase=harfbuzz
 pkgname=(harfbuzz harfbuzz-icu)
-pkgver=2.6.8
-pkgrel=2
+pkgver=2.7.0
+pkgrel=1
 pkgdesc="OpenType text shaping engine"
 url="https://www.freedesktop.org/wiki/Software/HarfBuzz"
 arch=(x86_64)
@@ -12,11 +12,9 @@ license=(MIT)
 makedepends=(glib2 freetype2 graphite cairo icu gobject-introspection gtk-doc
              ragel git python meson)
 checkdepends=(python-fonttools python-setuptools)
-_commit=e4203c14699cc0903a2b4611167a7b99532cfdb0  # tags/2.6.8^0
-source=("git+https://github.com/harfbuzz/harfbuzz#commit=$_commit"
-        0001-meson-Make-Requires-in-.pc-files-match-autotools.patch)
-sha256sums=('SKIP'
-            'ebf92aed7613da18817fedccab0962e50308b93f8218e79aae36b6587453cbba')
+_commit=a01c7a380b9a3351bc7056c816e1340b5374a6f8  # tags/2.7.0^0
+source=("git+https://github.com/harfbuzz/harfbuzz#commit=$_commit")
+sha256sums=('SKIP')
 
 pkgver() {
   cd harfbuzz
@@ -25,7 +23,6 @@ pkgver() {
 
 prepare() {
   cd harfbuzz
-  git apply -3 ../0001-meson-Make-Requires-in-.pc-files-match-autotools.patch
 }
 
 build() {
@@ -35,8 +32,9 @@ build() {
 }
 
 check() {
-  TMPDIR="$srcdir" meson test -C build --print-errorlogs
-  rm -rf "$srcdir"/tmp*
+  mkdir -p tmp
+  TMPDIR="$PWD/tmp" meson test -C build --print-errorlogs
+  rm -r tmp
 }
 
 package_harfbuzz() {
