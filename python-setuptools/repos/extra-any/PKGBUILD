@@ -3,7 +3,7 @@
 # Contributor: Eli Schwartz <eschwartz@archlinux.org>
 
 pkgname=python-setuptools
-pkgver=49.2.0
+pkgver=49.6.0
 pkgrel=1
 epoch=1
 pkgdesc="Easily download, build, install, upgrade, and uninstall Python packages"
@@ -12,12 +12,13 @@ license=('PSF')
 url="https://pypi.org/project/setuptools/"
 depends=('python-appdirs' 'python-packaging' 'python-ordered-set')
 makedepends=('git')
-checkdepends=('python-mock' 'python-pip' 'python-pytest-fixture-config' 'python-pytest-flake8'
-              'python-pytest-virtualenv' 'python-wheel' 'python-paver' 'python-pytest-cov')
+checkdepends=('python-jaraco.envs' 'python-mock' 'python-pip' 'python-pytest-fixture-config'
+              'python-pytest-flake8' 'python-pytest-virtualenv' 'python-wheel' 'python-paver'
+              'python-pytest-cov')
 provides=('python-distribute')
 replaces=('python-distribute')
 source=("$pkgname-$pkgver.tar.gz::https://github.com/pypa/setuptools/archive/v$pkgver.tar.gz")
-sha512sums=('0d6ed572eb958d016c071e9f4a61d55cf426fc0309487c804086cd44e2385c1898021048129454c6a35413fb9aee97b69dfaa8c8bf1c3b6a673141b2c6f50033')
+sha512sums=('a3dd9627addb146342f5739b9e9e5aab0ea13c5ce63bef119060d51f0c00eb504429fb5cf40f2fd320599dac2757d9cc7a19272fcf1b72bd43b8f90fcc3374e8')
 
 export SETUPTOOLS_INSTALL_WINDOWS_SPECIFIC_FILES=0
 
@@ -76,7 +77,7 @@ check() { (
   export PYTHONDONTWRITEBYTECODE=1
 
   cd setuptools-$pkgver
-  python -m pytest
+  python -m pytest --deselect setuptools/tests/test_distutils_adoption.py
 )}
 
 package() {
