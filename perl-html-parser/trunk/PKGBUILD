@@ -4,30 +4,29 @@
 # Contributor: Firmicus <francois.archlinux.org>
 
 pkgname=perl-html-parser
-pkgver=3.72
-pkgrel=10
+pkgver=3.74
+pkgrel=1
 pkgdesc="Perl HTML parser class"
 arch=('x86_64')
 license=('PerlArtistic')
 url="https://search.cpan.org/dist/HTML-Parser/"
-depends=('perl-html-tagset')
-checkdepends=('perl-test-pod')
+depends=('perl-html-tagset' 'perl-http-message' 'perl-libwww' 'perl-uri')
 options=('!emptydirs')
-source=(https://www.cpan.org/authors/id/G/GA/GAAS/HTML-Parser-${pkgver}.tar.gz)
-md5sums=('eb7505e5f626913350df9dd4a03d54a8')
+source=(https://www.cpan.org/authors/id/C/CA/CAPOEIRAB/HTML-Parser-$pkgver.tar.gz)
+sha512sums=('bf2eb1ad61f4179bedcee589ed7d57826c38fe385dca03230a37b1c2d2cb526ff03c462c07ee064ab53c1e614de1576f616e6c4bcf34bb41855081f15bd3bd33')
 
 build() {
-  cd HTML-Parser-${pkgver}
+  cd HTML-Parser-$pkgver
   perl Makefile.PL INSTALLDIRS=vendor
   make
 }
 
 check() {
-  cd HTML-Parser-${pkgver}
+  cd HTML-Parser-$pkgver
   make test
 }
 
 package() {
-  cd HTML-Parser-${pkgver}
+  cd HTML-Parser-$pkgver
   make install DESTDIR="${pkgdir}"
 }

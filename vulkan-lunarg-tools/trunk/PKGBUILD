@@ -1,16 +1,16 @@
 # Maintainer: Laurent Carlier <lordheavym@gmail.com>
 
 pkgbase=vulkan-lunarg-tools
-pkgname=(vulkan-trace vulkan-extra-layers)
-pkgver=1.2.141.0+10646+e51f7617f
+pkgname=(vulkan-extra-tools vulkan-extra-layers)
+pkgver=1.2.153+10858+bde9980a3
 pkgrel=1
 arch=(x86_64)
 url="http://lunarg.com/"
 license=('custom')
 depends=()
 makedepends=(git cmake python libx11 libxrandr wayland qt5-svg qt5-webengine)
-#source=("https://github.com/LunarG/VulkanTools/archive/sdk-${pkgver}.tar.gz")
-source=("VulkanTools-sdk::git+https://github.com/LunarG/VulkanTools.git#commit=e51f7617f73ee8cfd8908dd7d8c6b92531c9831")
+# source=("https://github.com/LunarG/VulkanTools/archive/v${pkgver}.tar.gz")
+source=("VulkanTools-sdk::git+https://github.com/LunarG/VulkanTools.git#commit=bde9980a31a0bc6197ee9f66f71775ce4f014879")
 sha256sums=('SKIP')
 
 _install() {
@@ -24,9 +24,9 @@ _install() {
 }
 
 pkgver() {
-  cd "${srcdir}"/VulkanTools*
+ cd "${srcdir}"/VulkanTools*
 
-  echo 1.2.141.0+$(git rev-list --count HEAD)+$(git rev-parse --short HEAD)
+ echo 1.2.153+$(git rev-list --count HEAD)+$(git rev-parse --short HEAD)
 }
 
 build() {
@@ -46,26 +46,24 @@ build() {
     -DBUILD_WSI_XLIB_SUPPORT=On \
     -DBUILD_WSI_WAYLAND_SUPPORT=On \
     -DBUILD_TESTS=OFF \
-    -DBUILD_VIA=OFF \
+    -DBUILD_VIA=ON \
     -DCMAKE_BUILD_TYPE=Release \
     ..
   make
   make DESTDIR="${srcdir}/fakeinstall" install
 }
 
-package_vulkan-trace() {
-  pkgdesc="Vulkan tracing and replaying tools"
+package_vulkan-extra-tools() {
+  pkgdesc="Vulkan lunarg tools"
   depends=(vulkan-validation-layers qt5-svg qt5-webengine)
+  conflicts=('vulkan-trace<1.2.148.1')
   groups=('vulkan-devel')
 
   _install fakeinstall/usr/bin/*
-  _install fakeinstall/usr/lib/libVkLayer_vktrace_layer.so
-  _install fakeinstall/usr/lib/libvkdisplay_*.so
-  _install fakeinstall/etc/vulkan/explicit_layer.d/VkLayer_vktrace_layer.json
 
   install -dm755 ${pkgdir}/usr/share/{doc,licenses}/${pkgname}
-  install -m644 VulkanTools*/vktrace/LICENSE "${pkgdir}"/usr/share/licenses/${pkgname}/
-  install -m644 VulkanTools*/vktrace/vktrace.md "${pkgdir}"/usr/share/doc/${pkgname}/
+  install -m644 VulkanTools*/LICENSE.txt "${pkgdir}"/usr/share/licenses/${pkgname}/
+  install -m644 VulkanTools*/vkconfig/vkconfig.md "${pkgdir}"/usr/share/doc/${pkgname}/
 }
 
 package_vulkan-extra-layers() {

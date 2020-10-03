@@ -1,7 +1,7 @@
 # Maintainer: Andreas Radke <andyrtr@archlinux.org>
 
 pkgname=cups-filters
-pkgver=1.27.5
+pkgver=1.28.3
 pkgrel=1
 pkgdesc="OpenPrinting CUPS Filters"
 arch=('x86_64')
@@ -17,7 +17,7 @@ optdepends=('ghostscript: for non-PostScript printers to print with CUPS to conv
 	    'docx2txt: to convert Microsoft OOXML text from DOCX files')
 backup=(etc/cups/cups-browsed.conf)
 source=(https://www.openprinting.org/download/cups-filters/$pkgname-$pkgver.tar.xz)
-sha256sums=('a166ff60a56ef7c19df93129fb79b31ffadb4de32b26fc6b1ce03b75a016559e')
+sha256sums=('4a786a16a9f1336ccc640c608aef708ba5d507caada53470ce8c1694877b5941')
 
 build() {
   cd "$pkgname"-$pkgver
