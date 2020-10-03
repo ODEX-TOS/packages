@@ -2,7 +2,7 @@
 # Maintainer: Dan McGee <dan@archlinux.org>
 
 pkgname=dash
-pkgver=0.5.11
+pkgver=0.5.11.2
 pkgrel=1
 pkgdesc='POSIX compliant shell that aims to be as small as possible'
 url='http://gondor.apana.org.au/~herbert/dash/'
@@ -10,9 +10,14 @@ arch=('x86_64')
 license=('BSD')
 depends=('glibc')
 install=dash.install
-source=(http://gondor.apana.org.au/~herbert/dash/files/${pkgname}-${pkgver}.tar.gz)
-sha512sums=('41c3afa8aa4788f7899b9a4c1bce2dc8629f4405184cdc7269993e72c695cf9537c9e68b654d56f06c604a82ffa73c9160b91368e82a3593a12ff7dea10505d1')
-b2sums=('0d399b35c10a33f6a22f51f7b74b9e092fb11d47ae45948f43fab0dd1416061145e7f930f0f0d1119d02cc45790ba19ce040c951322c131e706e5f3f32f2612b')
+source=(https://git.kernel.org/pub/scm/utils/dash/dash.git/snapshot/${pkgname}-${pkgver}.tar.gz)
+sha512sums=('851abffe9087c79f580801b323cc1c26ca5a370a34ca4aa241f47802ba645fe854f8623a0f81e0e14f05b7b824828bace22901ac4ad77d7ce4630cb5368243c2')
+b2sums=('7a7e86e226e646adaddaf2e5bcc86c8c1ef72649851709c1aa77ce819924d6b9729dd37a2a443586849eb32a961ac7f253cfcf2c2bb9c01c1a2d7bfdcebac97d')
+
+prepare() {
+  cd ${pkgname}-${pkgver}
+  autoreconf -fiv
+}
 
 build() {
   cd ${pkgname}-${pkgver}
@@ -22,7 +27,7 @@ build() {
     --mandir=/usr/share/man \
     --exec-prefix="" \
     --with-libedit
-  make
+  make V=1
 }
 
 package() {
