@@ -2,7 +2,7 @@
 # Contributor: Eric Bélanger <eric@archlinux.org>
 
 pkgname=nasm
-pkgver=2.15.02
+pkgver=2.15.05
 pkgrel=1
 pkgdesc='80x86 assembler designed for portability and modularity'
 url='https://www.nasm.us'
@@ -12,8 +12,8 @@ depends=('glibc')
 makedepends=('perl-font-ttf' 'perl-sort-versions' 'fontconfig' 'adobe-source-sans-pro-fonts'
              'ttf-liberation' 'ghostscript' 'xmlto' 'asciidoc')
 source=(https://www.nasm.us/pub/nasm/releasebuilds/${pkgver}/${pkgname}-${pkgver}.tar.xz)
-sha512sums=('7375f970ca0c6c31fe2cb5c8c2b5a0f854eaff374b1e7bc9e09546246a84fe73a2ba6073e63d9287444cf17c9e2d342c3ff73ca961c2c0e3e2a9c3aba77114c7')
-b2sums=('e325ef3b59582b1e3bd6503ec8c5b8a7abf92c98a0234451a3695ecd3102674a34d7cd260a50278b8d98f4663651de058e858e58e6dfda8ae33d1cdb8bb2fe3f')
+sha512sums=('512f90a2584f1c5811429274b97c64a2cedf37b9fdeffb1bcd0ea64afd9ecc19a2d7877ca8f1e05393aa324153fc9f39ea51dacbf8d25a7d5a2d7728c925dba7')
+b2sums=('a41434965c2125577b762d907a0a3c251c75d9f9beac230fba4099182c7f7beb08c6d2c05c2432b0dc8ba829f24077f44c3096faea9bd0a533250e6dbbfaef35')
 
 build() {
   cd ${pkgname}-${pkgver}

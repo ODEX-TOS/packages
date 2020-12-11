@@ -1,8 +1,8 @@
 # Maintainer: Laurent Carlier <lordheavym@gmail.com>
 
 pkgname=vulkan-validation-layers
-pkgver=1.2.146
-pkgrel=2
+pkgver=1.2.158
+pkgrel=1
 pkgdesc="Vulkan Validation Layers"
 arch=(x86_64)
 url="https://www.khronos.org/vulkan/"
@@ -12,7 +12,7 @@ makedepends=(cmake python-lxml libx11 libxrandr wayland git)
 options=(!strip)
 source=(https://github.com/KhronosGroup/Vulkan-ValidationLayers/archive/v${pkgver}.tar.gz)
 #source=("git+https://github.com/KhronosGroup/Vulkan-ValidationLayers.git#commit=35d091dad71304dab79758fdae4bda12f692d735")
-sha256sums=('b14dcf0b5f2410482e3c61192eebe9975bc3bd5005dd8bce36884eaa12e20844')
+sha256sums=('9d7a6eba2db88b8af6457acce0b638324ca03cde2e9589ae96749114091c6e9e')
 
 #pkgver() {
 #  cd "${srcdir}/Vulkan-ValidationLayers"
@@ -49,6 +49,6 @@ package() {
   make DESTDIR="${pkgdir}" install
 
   install -dm755 "${pkgdir}"/usr/share/{licenses/,doc/}${pkgname}/
-  install -m644 ../docs/* "${pkgdir}"/usr/share/doc/${pkgname}/
+  cp -r ../docs/* "${pkgdir}"/usr/share/doc/${pkgname}/
   install -m644 ../LICENSE.txt "${pkgdir}"/usr/share/licenses/${pkgname}/
 }

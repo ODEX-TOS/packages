@@ -2,8 +2,9 @@
 
 pkgbase=linux-firmware
 pkgname=(linux-firmware amd-ucode)
-_commit=7a30af16115959cf5a817ae51429e72c0084fc0c  # tags/20200817^0
-pkgver=20200817.7a30af1
+_commit=bc9cd0b7b0e96038ccc041ff409948d8f176142d
+#_tag=20201118
+pkgver=20201120.bc9cd0b
 pkgrel=1
 pkgdesc="Firmware files for Linux"
 url="https://git.kernel.org/?p=linux/kernel/git/firmware/linux-firmware.git;a=summary"

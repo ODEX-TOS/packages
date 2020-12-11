@@ -6,37 +6,28 @@
 # Contributor: Sergio Jovani Guzman <moret@paretux.org>
 
 pkgname=konversation
-pkgver=1.7.5
-pkgrel=3
+pkgver=20.12.0
+pkgrel=1
 pkgdesc="A user-friendly and fully-featured IRC client"
 arch=(x86_64)
 url="https://konversation.kde.org"
-depends=(knotifyconfig kemoticons kparts kidletime phonon-qt5 qca-qt5 hicolor-icon-theme perl)
+depends=(knotifyconfig kparts kidletime knewstuff phonon-qt5 qca hicolor-icon-theme perl)
 optdepends=('python: python scripting support' 'keditbookmarks: for managing bookmarks')
 makedepends=(extra-cmake-modules kdoctools)
 license=(GPL2 FDL)
-source=("https://download.kde.org/stable/$pkgname/$pkgver/src/$pkgname-$pkgver.tar.xz"{,.sig}
-         konversation-qt-5.13.patch::"https://cgit.kde.org/konversation.git/patch/src/irc?id=4d003661")
-sha256sums=('60bf7533062b5fc63a37105461b4776437f4e24859e8ddaed1d48c4ba1470940'
-            'SKIP'
-            '2b734869ae5e04644aceff8e02d1b24c8b705bd984f68f8fc4c0c9c042851afb')
-validpgpkeys=(DA6B31C4B98A877DBB2EF9A292220328C632316E) # Eike Hein <hein@kde.org>
-
-prepare() {
-  mkdir -p build
-
-  cd $pkgname-$pkgver
-  patch -p1 -i ../konversation-qt-5.13.patch # Fix build with Qt 5.13
-}
+groups=(kde-applications kde-network)
+source=("https://download.kde.org/stable/release-service/$pkgver/src/$pkgname-$pkgver.tar.xz"{,.sig})
+sha256sums=('d933d6b2f3dab4633cf58f5ea7b961cb8a7886d09263f9199fa7228eaadf5e8c'
+            'SKIP')
+validpgpkeys=(CA262C6C83DE4D2FB28A332A3A6A4DB839EAA6D7  # Albert Astals Cid <aacid@kde.org>
+              F23275E4BF10AFC1DF6914A6DBD2CE893E2D1C87) # Christoph Feck <cfeck@kde.org>
 
 build() {
-  cd build
-  cmake ../$pkgname-$pkgver \
+  cmake -B build -S $pkgname-$pkgver \
     -DBUILD_TESTING=OFF
-  make
+  cmake --build build
 }
 
 package() {
-  cd build
-  make DESTDIR="$pkgdir" install
+  DESTDIR="$pkgdir" cmake --install build
 }

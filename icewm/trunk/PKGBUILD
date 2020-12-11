@@ -2,17 +2,18 @@
 # Contributor: Eric Bélanger <eric@archlinux.org>
 
 pkgname=icewm
-pkgver=1.7.0
+pkgver=1.9.2
 pkgrel=1
 pkgdesc="A Window Manager designed for speed, usability, and consistency"
 arch=('x86_64')
 url="https://ice-wm.org/"
 license=('LGPL')
-depends=('libxrandr' 'libxinerama' 'libsndfile' 'libao' 'fribidi' 'libxft' 'libxcomposite' 'libxdamage' 'gdk-pixbuf2' 'libxpm')
+depends=('libxrandr' 'libxinerama' 'libsndfile' 'libao' 'fribidi' 'libxft'
+         'libxcomposite' 'libxdamage' 'gdk-pixbuf-xlib' 'libxpm')
 makedepends=('xorg-mkfontdir' 'asciidoctor' 'librsvg')
 optdepends=('perl: for icewm-menu-xrandr')
 source=(https://github.com/ice-wm/icewm/releases/download/$pkgver/$pkgname-$pkgver.tar.lz)
-sha256sums=('287b2acdc8fb6bbe2ae02e3920c803264fe6d1100eb4ce0217a4c85e53174633')
+sha256sums=('713bd7849f9fba8338beb278c94c16a6ae610de7e718707e19a334429f17203f')
 
 build() {
   cd ${pkgname}-${pkgver}

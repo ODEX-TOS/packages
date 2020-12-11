@@ -2,7 +2,7 @@
 # Contributor: Dan McGee <dan@archlinux.org>
 
 pkgname=pacman-mirrorlist
-pkgver=20200801
+pkgver=20201205
 pkgrel=1
 pkgdesc="Arch Linux mirror list for use by pacman"
 arch=('any')
@@ -27,5 +27,5 @@ package() {
   install -m644 "$srcdir/mirrorlist" "$pkgdir/etc/pacman.d/"
 }
 
-md5sums=('b1dc6b0d9e48b2872faf3ab8673836c1')
-sha256sums=('f43d378b7595abd24771efcbe627ac04557b732e73b566c895da9971f807bf4a')
+md5sums=('5e05621bf77ba874e874b1ecc44cbd7f')
+sha256sums=('b0acf1f575382e57160b981c06706b1c68c9249a72edfe41a290c294409d8cfb')

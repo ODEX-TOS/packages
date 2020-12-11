@@ -4,9 +4,9 @@
 
 pkgbase=systemd
 pkgname=('systemd' 'systemd-libs' 'systemd-resolvconf' 'systemd-sysvcompat')
-_tag='91b37e6f0982e1e64c63017000248d7441a83a2e' # git rev-parse v${pkgver}
-pkgver=246.2
-pkgrel=2
+_tag='dcc360e35ecdeadfeaf8441628cfebb452acd59b' # git rev-parse v${pkgver}
+pkgver=247.1
+pkgrel=3
 arch=('x86_64')
 url='https://www.github.com/systemd/systemd'
 makedepends=('acl' 'cryptsetup' 'docbook-xsl' 'gperf' 'lz4' 'xz' 'pam' 'libelf'
@@ -42,7 +42,7 @@ sha512sums=('SKIP'
             'SKIP'
             'e38c7c422c82953f9c2476a5ab8009d614cbec839e4088bff5db7698ddc84e3d8ed64f32ed323f57b1913c5c9703546f794996cb415ed7cdda930b627962a3c4'
             'f0d933e8c6064ed830dec54049b0a01e27be87203208f6ae982f10fb4eddc7258cb2919d594cbfb9a33e74c3510cfd682f3416ba8e804387ab87d1a217eb4b73'
-            'f1f0bc599eb73b96f81e5413a55617ab82978d057dc0cabf226d225bb836a967fe13b84c4f24f64c074b6568026ab81d457512ff20a5918892c47a3a603eaa6e'
+            '8e76f8334b95ce7fee9190f4a1016b16109f3a75b68635fc227b2b4791cf8179ef09b532b66b4ed885ddf98ed76befed3106f3c3088f1819ed8cdf4c13e0805a'
             'a25b28af2e8c516c3a2eec4e64b8c7f70c21f974af4a955a4a9d45fd3e3ff0d2a98b4419fe425d47152d5acae77d64e69d8d014a7209524b75a81b0edb10bf3a'
             '07a40d856b9cca71f0183d7e27736ee86b7ca4d8f5114a525dc39c334355b55c17c66a5f18fd78dead2afffd1d35b0a73fb4a1b2769ca1df34d0f43dcc2ec342'
             'cedcfde5b60bd95e088ecf61930bb9a4b275c826cca41e6186cb2c16cb2d01e6d4c7fb4dbf8b27b9afc2e56e212f01c2608f849cced12307714898aec76b0f1b'
@@ -60,6 +60,21 @@ sha512sums=('SKIP'
             '825b9dd0167c072ba62cabe0677e7cd20f2b4b850328022540f122689d8b25315005fa98ce867cf6e7460b2b26df16b88bb3b5c9ebf721746dce4e2271af7b97')
 
 _backports=(
+  # set: introduce set_strjoin()
+  '4dbce717873000cff7b56f89266d1d2fe53f9284'
+  # sd-device: use set_strjoin()
+  '6f3ac0d51766b0b9101676cefe5c4ba81feba436'
+  # sd-device: keep escaped strings in DEVLINK= property
+  '31063db0b4842a452c6eadde5b969aaee2a0516a'
+  # test: add tests for device_new_from_nulstr()
+  'e6f882871568e4a331ac473871ee8a884f6e48d6'
+
+  # network: do not set broadcast if prefixlen is 31 or 32
+  'df8aa086420e6ce61e32898b2bb7c88b87fd1c43'
+  # network: fix verification for broadcast address
+  '05a7023d242b9012216c661f253df1c9c3d45b39'
+  # network: ignore broadcast address for /31 or /32 addresses
+  '2a236f9fc0ff8fb2152032551436fde74da7217a'
 )
 
 _reverts=(
@@ -103,7 +118,7 @@ build() {
 
   local _meson_options=(
     -Dversion-tag="${pkgver}-${pkgrel}-tos"
-
+    -Dmode=release
     -Dgnu-efi=true
     -Dima=false
     -Dlibidn2=true
@@ -142,7 +157,7 @@ package_systemd() {
   license=('GPL2' 'LGPL2.1')
   depends=('acl' 'libacl.so' 'bash' 'cryptsetup' 'libcryptsetup.so' 'dbus'
            'iptables' 'kbd' 'kmod' 'libkmod.so' 'hwids' 'libcap' 'libcap.so'
-           'libgcrypt' 'libxcrypt' 'libcrypt.so' 'systemd-libs' 'libidn2' 'libidn2.so' 'lz4' 'pam'
+           'libgcrypt' 'libxcrypt' 'libcrypt.so' 'systemd-libs' 'libidn2' 'lz4' 'pam'
            'libelf' 'libseccomp' 'libseccomp.so' 'util-linux' 'libblkid.so'
            'libmount.so' 'xz' 'pcre2' 'audit' 'libaudit.so' 'libp11-kit'
            'libp11-kit.so' 'openssl')
@@ -156,11 +171,13 @@ package_systemd() {
               'curl: machinectl pull-tar and pull-raw')
   backup=(etc/pam.d/systemd-user
           etc/systemd/coredump.conf
+          etc/systemd/homed.conf
           etc/systemd/journald.conf
           etc/systemd/journal-remote.conf
           etc/systemd/journal-upload.conf
           etc/systemd/logind.conf
           etc/systemd/networkd.conf
+          etc/systemd/pstore.conf
           etc/systemd/resolved.conf
           etc/systemd/sleep.conf
           etc/systemd/system.conf

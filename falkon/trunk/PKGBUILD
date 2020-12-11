@@ -2,7 +2,7 @@
 
 pkgname=falkon
 pkgver=3.1.0
-pkgrel=11
+pkgrel=15
 pkgdesc="Cross-platform QtWebEngine browser"
 arch=(x86_64)
 url="https://www.falkon.org/"
@@ -13,14 +13,16 @@ optdepends=('kio: KDE integration' 'purpose: KDE integration' 'libgnome-keyring:
             'pyside2: Python plugins')
 replaces=(qupzilla)
 source=(https://download.kde.org/stable/$pkgname/${pkgver%.*}/$pkgname-$pkgver.tar.xz{,.sig}
-        falkon-pyside-5.12.2.patch::"https://cgit.kde.org/falkon.git/patch/?id=479933e0"
-        falkon-qt-5.14.patch::"https://cgit.kde.org/falkon.git/patch/?id=bbde5c69"
-        falkon-qt-5.15.patch::"https://invent.kde.org/network/falkon/-/commit/2ca83509.patch")
+        falkon-pyside-5.12.2.patch::"https://invent.kde.org/network/falkon/-/commit/479933e0.patch"
+        falkon-qt-5.14.patch::"https://invent.kde.org/network/falkon/-/commit/bbde5c69.patch"
+        falkon-qt-5.15.patch::"https://invent.kde.org/network/falkon/-/commit/2ca83509.patch"
+        falkon-shiboken-5.15.2.patch::"https://invent.kde.org/network/falkon/merge_requests/11.patch")
 sha256sums=('ce743cd80c0e2d525a784e29c9b487f73480119b0567f9ce8ef1f44cca527587'
             'SKIP'
-            'ab7b8c1a8e0e53cb3db2722498f55cb39103d2138f4cf71859384549544074d6'
-            'd5a8bb8b77087ffd7ca73c004afe396333966145744d021395b196e020b1f0ae'
-            '20dad4b20649a8e3be7dcbb36c236d7afd9491fe87b1bdee57bf09a8bda5414d')
+            '6ca8fe7339229eb36fe8124e0071237f6dff06de38043a23a325a0fd0361e4e0'
+            'ab7a8a1952e7efb5c3e9a3983d049132a7b56b29bd0007c7a0a8506189d86ec8'
+            '24c2ca89295367a7e64c2c62ebd6400110472f51f2bc7937ae0e5a80b2bd5ad4'
+            'db4e20d66a6dd6e63b7edb632bad1be8123beded078a4e8a1b9f4a19f460a419')
 validpgpkeys=(3CB7B8416EF6778B409FDC43EBC3FC294452C6D8) # David Rosca <nowrep@gmail.com>
 
 prepare() {
@@ -28,6 +30,7 @@ prepare() {
   patch -p1 -i ../falkon-pyside-5.12.2.patch # Fix build with PySide 5.12.2
   patch -p1 -i ../falkon-qt-5.14.patch # Fix build with Qt 5.14
   patch -p1 -i ../falkon-qt-5.15.patch # Fix build with Qt 5.15
+  patch -p1 -i ../falkon-shiboken-5.15.2.patch # Fix build with shiboken 5.15.2
 }
 
 build() {

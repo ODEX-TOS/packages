@@ -1,36 +1,44 @@
-# Maintainer: Gaetan Bisson <bisson@archlinux.org>
+# Maintainer: David Runge <dvzrv@archlinux.org>
+# Contributor: Gaetan Bisson <bisson@archlinux.org>
 # Contributor: Angel Velasquez <angvp@archlinux.org> 
 # Contributor: Andrea Scarpino <andrea@archlinux.org>
 # Contributor: damir <damir@archlinux.org>
 # Contributor: Daniel Bainton <dpb [at] backarrow.org>
 
 pkgname=ncmpc
-pkgver=0.38
+pkgver=0.42
 pkgrel=1
-pkgdesc='Fully featured MPD client using ncurses'
+pkgdesc="Fully featured MPD client which runs in a terminal"
 url='https://www.musicpd.org/clients/ncmpc/'
 arch=('x86_64')
-license=('GPL')
-depends=('ncurses' 'libmpdclient' 'boost-libs' 'lirc')
-optdepends=('ruby: for lyrics plugin')
-makedepends=('meson' 'python-sphinx' 'boost')
-validpgpkeys=('0392335A78083894A4301C43236E8A58C6DB4512')
+license=('GPL2')
+depends=('gcc-libs' 'glibc' 'lirc' 'pcre')
+makedepends=('boost' 'libmpdclient' 'meson' 'ncurses' 'python-sphinx')
 source=("https://www.musicpd.org/download/${pkgname}/${pkgver%.*}/${pkgname}-${pkgver}.tar.xz"{,.sig})
-sha256sums=('2bc1aa38aacd23131895cd9aa3abd9d1ca5700857034d9f35209e13e061e27a2'
+sha512sums=('fc232d501bea68d7a382eda7f532f62189233c49071f083dbc4f2fc188015c58dd247e84e998aef121f204059801cf09b0a2f1214deea785abea343217ce5798'
             'SKIP')
-
-prepare() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
-	sed "s/curses == 'ncursesw'/false/g" -i meson.build
-}
+b2sums=('27e667d234bed1bfaf6a457748584f9d0a47edd5044e9e24039f7b1f4196dc9baec2b722387d20e9acb7c8127c5faa7df321bac64699c6541bb96ce22b8bc6cd'
+        'SKIP')
+validpgpkeys=('0392335A78083894A4301C43236E8A58C6DB4512') # Max Kellermann <max@blarg.de>
 
 build() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
-	arch-meson . build -Dlyrics_screen=true
-	ninja -C build
+  cd "${pkgname}-${pkgver}"
+  meson --prefix /usr \
+        --libexecdir lib \
+        --sbindir bin \
+        --buildtype plain \
+        --auto-features enabled \
+        --wrap-mode nodownload \
+        -D b_lto=true \
+        -D b_pie=true \
+        -D lyrics_screen=true \
+        -D chat_screen=true \
+        build
+  ninja -C build
 }
 
 package() {
-	cd "${srcdir}/${pkgname}-${pkgver}"
-	DESTDIR="${pkgdir}" ninja -C build install
+  depends+=('libmpdclient.so' 'libncursesw.so')
+  cd "${pkgname}-${pkgver}"
+  DESTDIR="${pkgdir}" ninja -C build install
 }
